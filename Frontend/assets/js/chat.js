@@ -25,17 +25,20 @@ $(document).ready(function() {
     }
   }
 
-  function callChatbotApi(message) {
-    // params, body, additionalParams
-    return sdk.chatbotPost({}, {
-      messages: [{
-        type: 'unstructured',
-        unstructured: {
-          text: message
-        }
-      }]
-    }, {});
-  }
+const lexSessionId = crypto.randomUUID();
+
+function callChatbotApi(message) {
+  return sdk.chatbotPost({}, {
+    messages: [{
+      type: 'unstructured',
+      unstructured: {
+        id: lexSessionId,
+        text: message,
+        timestamp: new Date().toISOString()
+      }
+    }]
+  }, {});
+}
 
   function insertMessage() {
     msg = $('.message-input').val();
