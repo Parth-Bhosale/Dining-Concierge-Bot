@@ -1,6 +1,8 @@
 import json
+import boto3
 
-
+sqs = boto3.client("sqs")
+QUEUE_URL = "https://sqs.us-east-1.amazonaws.com/339262218058/Q1"
 def close(intent_name, message):
     return {
         "sessionState": {
@@ -68,11 +70,25 @@ def lambda_handler(event, context):
             number_of_people = slots["NumberOfPeople"]["value"]["interpretedValue"]
             email = slots["Email"]["value"]["interpretedValue"]
 
+            message = {
+                "Location": location,
+                "Cuisine": cuisine,
+                "DiningTime": dining_time,
+                "NumberOfPeople": number_of_people,
+                "Email": email
+            }
+
+            sqs.send_message(
+                QueueUrl=QUEUE_URL,
+                MessageBody=json.dumps(message)
+            )
+
             print("Location:", location)
             print("Cuisine:", cuisine)
             print("Dining Time:", dining_time)
             print("Number of People:", number_of_people)
             print("Email:", email)
+
 
             return close(
                 intent_name,
