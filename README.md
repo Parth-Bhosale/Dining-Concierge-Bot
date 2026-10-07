@@ -1,10 +1,3 @@
-# Cloud Computing Fall 2025 - HW 1
-
-*Chatbot Concierge*
-
-Frontend starter repository for HW 1 of the Cloud Computing & Big Data
-class at New York University.
-
 ## Usage ##
 
 1. Clone the repository.
