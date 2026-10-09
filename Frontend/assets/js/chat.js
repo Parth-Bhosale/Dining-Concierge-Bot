@@ -25,7 +25,9 @@ $(document).ready(function() {
     }
   }
 
-const lexSessionId = crypto.randomUUID();
+
+const lexSessionId =
+  'session-' + Date.now() + '-' + Math.random().toString(36).substring(2, 15);
 
 function callChatbotApi(message) {
   return sdk.chatbotPost({}, {
@@ -95,11 +97,11 @@ function callChatbotApi(message) {
   });
 
   $(window).on('keydown', function(e) {
-    if (e.which == 13) {
-      insertMessage();
-      return false;
-    }
-  })
+  if (e.which == 13) {
+    insertMessage();
+    return false;
+  }
+})
 
   function insertResponseMessage(content) {
     $('<div class="message loading new"><figure class="avatar"><img src="https://media.tenor.com/images/4c347ea7198af12fd0a66790515f958f/tenor.gif" /></figure><span></span></div>').appendTo($('.mCSB_container'));
